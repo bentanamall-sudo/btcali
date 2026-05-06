@@ -4,7 +4,7 @@ import { Button } from "./UI";
 
 const links = [
   ["/", "Home"],
-  ["/free-tutorials", "Free Tutorials"],
+  ["/tutorials", "Free Tutorials"],
   ["/skill-library", "Skill Library"],
   ["/roadmaps", "Roadmaps"],
   ["/programs", "Programs"],

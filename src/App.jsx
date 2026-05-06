@@ -36,14 +36,14 @@ function Home() {
           <h1 className="text-4xl font-black">Master Elite Calisthenics Skills.</h1>
           <p className="text-sm text-[var(--muted)]">Structured programs, tutorials, progress tracking, and 1-on-1 coaching in one premium platform.</p>
           <div className="flex gap-2">
-            <Link to="/free-tutorials"><Button>Start Free</Button></Link>
+            <Link to="/tutorials"><Button>Start Free</Button></Link>
             <Link to="/programs"><Button>View Programs</Button></Link>
           </div>
         </div>
         <ImagePlaceholder label="Hero athlete image - Replace with your own image" />
       </Card>
       <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {[["Free Tutorials", "/free-tutorials"], ["Training Programs", "/programs"], ["1-on-1 Coaching", "/coaching"], ["Wall of Fame", "/wall-of-fame"]].map(([name, to]) => (
+        {[["Free Tutorials", "/tutorials"], ["Training Programs", "/programs"], ["1-on-1 Coaching", "/coaching"], ["Wall of Fame", "/wall-of-fame"]].map(([name, to]) => (
           <Card key={name}><ImagePlaceholder /><h3 className="mt-3 font-semibold">{name}</h3><Link to={to}><Button className="mt-3">Open</Button></Link></Card>
         ))}
       </section>
@@ -53,7 +53,82 @@ function Home() {
         ))}
       </section>
       <Card><h3 className="font-semibold">1-on-1 Coaching Preview</h3><p className="mt-2 text-sm text-[var(--muted)]">Personalised programs, form feedback, video uploads, direct support, and group chat access.</p><Link to="/coaching"><Button className="mt-3">Apply for Coaching</Button></Link></Card>
-      <Card className="flex flex-wrap items-center justify-between gap-3"><h3 className="text-2xl font-bold">Ready to Train Smarter?</h3><div className="flex gap-2"><Link to="/free-tutorials"><Button>Start Free</Button></Link><Link to="/checkout"><Button>Unlock Full Access</Button></Link></div></Card>
+      <Card className="flex flex-wrap items-center justify-between gap-3"><h3 className="text-2xl font-bold">Ready to Train Smarter?</h3><div className="flex gap-2"><Link to="/tutorials"><Button>Start Free</Button></Link><Link to="/checkout"><Button>Unlock Full Access</Button></Link></div></Card>
+    </div>
+  );
+}
+
+function TutorialsHub() {
+  const tutorials = [
+    {
+      title: "Free Handstand Beginner Guide",
+      description: "Build confidence with entry drills, kick-up control, and safe freestanding foundations.",
+      difficulty: "Beginner",
+      to: "/tutorials/handstand-beginner",
+    },
+    {
+      title: "Free Planche Conditioning",
+      description: "Develop scap strength, lean capacity, and core tension for sustainable planche progress.",
+      difficulty: "Intermediate",
+      to: "/tutorials/planche-conditioning",
+    },
+  ];
+  return (
+    <div>
+      <PageTitle title="Free Tutorials Hub" sub="Choose your free BTCALI guide and start training with premium structure." />
+      <div className="grid gap-4 md:grid-cols-2">
+        {tutorials.map((item) => (
+          <Card
+            key={item.title}
+            className="border-[color:rgba(255,255,255,0.14)] bg-[color:rgba(15,20,32,0.68)] shadow-[0_0_28px_rgba(59,130,246,0.14)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_32px_rgba(59,130,246,0.26)]"
+          >
+            <div className="space-y-3">
+              <ImagePlaceholder label={`${item.title} - Replace with your own image`} />
+              <div className="inline-flex rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-3 py-1 text-xs font-semibold">
+                Difficulty: {item.difficulty}
+              </div>
+              <h3 className="text-xl font-bold">{item.title}</h3>
+              <p className="text-sm text-[var(--muted)]">{item.description}</p>
+              <Link to={item.to}>
+                <Button>Open Tutorial</Button>
+              </Link>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TutorialPage({ title, summary }) {
+  return (
+    <div className="space-y-4">
+      <PageTitle title={title} sub={summary} />
+      <Card className="border-[color:rgba(255,255,255,0.14)] bg-[color:rgba(15,20,32,0.68)] backdrop-blur-xl">
+        <ImagePlaceholder label={`${title} hero - Replace with your own image`} />
+        <p className="mt-4 text-sm text-[var(--muted)]">
+          Premium placeholder tutorial page. Add your video modules, coaching cues, and progression checkpoints here.
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <VideoPlaceholder label="Replace with your own video" />
+          <Card className="bg-[var(--panel)]">
+            <h3 className="font-semibold">What You&apos;ll Learn</h3>
+            <ul className="mt-2 space-y-1 text-sm text-[var(--muted)]">
+              <li>Technique setup and mobility preparation</li>
+              <li>Structured progressions with quality standards</li>
+              <li>Common faults and correction cues</li>
+            </ul>
+          </Card>
+        </div>
+      </Card>
+      <div className="flex flex-wrap gap-2">
+        <Link to="/tutorials">
+          <Button>Back to Tutorials Hub</Button>
+        </Link>
+        <Link to="/free-tutorials">
+          <Button>Open Legacy Free Tutorials</Button>
+        </Link>
+      </div>
     </div>
   );
 }
@@ -149,6 +224,25 @@ export default function App() {
     <Layout onThemeNext={nextTheme} currentTheme={currentTheme.name}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/tutorials" element={<TutorialsHub />} />
+        <Route
+          path="/tutorials/handstand-beginner"
+          element={
+            <TutorialPage
+              title="Handstand Beginner Guide"
+              summary="Build your handstand base with premium beginner progressions."
+            />
+          }
+        />
+        <Route
+          path="/tutorials/planche-conditioning"
+          element={
+            <TutorialPage
+              title="Planche Conditioning"
+              summary="Condition your shoulders, wrists, and core for planche readiness."
+            />
+          }
+        />
         <Route path="/free-tutorials" element={<FreeTutorials done={tutorialDone} toggleTutorial={(t) => setTutorialDone((d) => ({ ...d, [t]: !d[t] }))} />} />
         <Route path="/skill-library" element={<SkillLibrary />} />
         <Route path="/roadmaps" element={<Roadmaps roadmapDone={roadmapDone} toggleRoadmap={(n) => setRoadmapDone((d) => ({ ...d, [n]: !d[n] }))} />} />

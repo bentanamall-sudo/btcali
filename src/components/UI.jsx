@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { VideoPlayer } from "./VideoPlayer";
 
 export function Card({ className = "", children }) {
   return (
@@ -47,3 +48,5 @@ export function VideoPlaceholder({ label = "Replace with your own video" }) {
     </div>
   );
 }
+
+export { VideoPlayer };
